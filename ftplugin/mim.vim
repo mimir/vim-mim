@@ -26,14 +26,12 @@ setlocal nospell
 " terminals in the surface syntax, cf. langref.md#terminals.
 iabbrev <buffer> \to    →
 iabbrev <buffer> \gets  ←
-iabbrev <buffer> \rgets ⇐
 iabbrev <buffer> \top   ⊤
 iabbrev <buffer> \bot   ⊥
 iabbrev <buffer> \box   □
 iabbrev <buffer> \cup   ∪
 iabbrev <buffer> ->     →
 iabbrev <buffer> <-     ←
-iabbrev <buffer> <==    ⇐
 iabbrev <buffer> \lm    λ
 iabbrev <buffer> \<     ‹
 iabbrev <buffer> \>     ›

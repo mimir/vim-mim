@@ -124,12 +124,12 @@ syn match mimDelimiter "[,;.]"
 "   → ← => = @ $ # | : ∪          ("⊥" "⊤" "*" "□" "λ" are handled further above)
 "   + - / % == != < <= > >= << >>  (infix operators, cf. langref.md#infix)
 " plus the ASCII secondary spellings "->" for "→" and "<-" for "←".
-syn match mimOperator "[→←⇐∪=@$#|:+%<>-]"
+syn match mimOperator "[→←∪=@$#|:+%<>-]"
 " Multi-character operators are listed after the single-character ones: items
 " matching at the same position are resolved in favour of the one defined last
 " (":h :syn-priority"), and Vim's "\|" picks the first matching branch rather
 " than the longest, so "==" has to precede "=".
-syn match mimOperator "=>\|==\|!=\|<=\|>=\|<<\|>>\|->\|<-\|<=="
+syn match mimOperator "=>\|==\|!=\|<=\|>=\|<<\|>>\|->\|<-"
 " "/", but not the "//" of a line comment nor the "/*" of a block comment -
 " those are matched by mimComment, which is defined *before* this item.
 syn match mimOperator "/[/*]\@!"
