@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:    Mim
-" Maintainer:  https://github.com/AnyDSL/vim-mim
-" Based on:    docs/langref.md in https://github.com/AnyDSL/mimir
+" Maintainer:  https://github.com/mimir/vim-mim
+" Based on:    docs/langref.md in https://github.com/mimir/mimir
 
 if exists("b:current_syntax")
   finish

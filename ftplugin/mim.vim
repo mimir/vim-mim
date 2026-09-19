@@ -1,6 +1,6 @@
 " Vim filetype plugin
 " Language:    Mim
-" Maintainer:  https://github.com/AnyDSL/vim-mim
+" Maintainer:  https://github.com/mimir/vim-mim
 
 if exists("b:did_ftplugin")
   finish

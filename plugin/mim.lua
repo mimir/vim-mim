@@ -1,5 +1,5 @@
 -- Neovim: register the tree-sitter grammar for Mim
--- Maintainer:  https://github.com/AnyDSL/vim-mim
+-- Maintainer:  https://github.com/mimir/vim-mim
 --
 -- nvim-treesitter (branch `main`) does not ship a `mim` parser yet, so point it at
 -- https://github.com/mimir/tree-sitter-mim and let `:TSInstall mim` build it.  nvim-treesitter

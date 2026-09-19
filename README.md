@@ -1,6 +1,6 @@
 # vim-mim
 
-Vim/Neovim support for [Mim](https://anydsl.github.io/MimIR/langref.html), the front-end language of
+Vim/Neovim support for [Mim](https://mimir.github.io/langref.html), the front-end language of
 MimIR:
 
 * filetype detection for `*.mim`;
@@ -23,11 +23,11 @@ registration, e.g. to point nvim-treesitter at a local clone of the grammar your
 ### vim-plug
 
 ```vim
-Plug 'AnyDSL/vim-mim'
+Plug 'mimir/vim-mim'
 ```
 
 ### lazy.nvim
 
 ```lua
-{ "AnyDSL/vim-mim" }
+{ "mimir/vim-mim" }
 ```
