@@ -77,21 +77,25 @@ Mim spells several terminals with characters that are awkward to type, so the ft
 insert-mode abbreviations for them.  Type the left column followed by a space or any non-keyword
 character:
 
-| Type          | Get  | Used for              |
-|---------------|------|-----------------------|
-| `\to`, `->`   | `→`  | function type                      |
-| `\gets`, `<-` | `←`  | insert                             |
-| `\lm`         | `λ`  | lambda                             |
-| `\bot`        | `⊥`  | bottom                             |
-| `\top`        | `⊤`  | top                                |
-| `\box`        | `□`  | `Type (1:Univ)`                    |
-| `\cup`        | `∪`  | union                              |
-| `\<`, `\>`    | `‹›` | pack                               |
-| `\<<`, `\>>`  | `«»` | array                              |
-| `\{`, `\}`    | `⦃⦄` | unique/singleton type              |
+| Type          | Get  | Used for               |
+|---------------|------|------------------------|
+| `\to`, `->`   | `→`  | function type          |
+| `\gets`, `<-` | `←`  | insert                 |
+| `\lm`         | `λ`  | lambda                 |
+| `\bot`        | `⊥`  | bottom                 |
+| `\top`        | `⊤`  | top                    |
+| `\box`        | `□`  | `Type (1:Univ)`        |
+| `\cup`        | `∪`  | union                  |
+| `\<`, `\>`    | `‹ ›` | pack                   |
+| `\ll`, `\gg`  | `« »` | array                  |
+| `\{`, `\}`    | `⦃ ⦄` | unique/singleton type  |
 
-`→ ← λ ⊥ ⊤` have ASCII spellings of their own (`-> <- lm bot top`), which Mim accepts just as well;
-`∪ □ ‹› «» ⦃⦄` do not, so for those the abbreviations - or `:h digraphs` - are the way in.
+`→ ← λ ⊥ ⊤` have ASCII spellings of their own (`-> <- lm bot top`) that Mim accepts just as well;
+`∪ □ ‹ › « » ⦃ ⦄` do not, so for those the abbreviations - or `:h digraphs` - are the way in.
+
+`->` and `<-` consist entirely of non-keyword characters, which Vim only expands at the start of a
+line or after whitespace (`:h abbreviations`); `x-> y` stays as typed.  The `\...` spellings have no
+such restriction.
 
 The ftplugin adds `\` to `'iskeyword'` for the buffer so that `\to` and friends are recognised as
 one word, and undoes that (along with everything else it sets) via `b:undo_ftplugin`.
