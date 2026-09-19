@@ -11,10 +11,31 @@ MimIR:
 
 ## Install
 
+No setup call and nothing to configure: as soon as the plugin is on the 'runtimepath', `*.mim`
+files are detected, highlighted, and get the abbreviations.
+
 ### lazy.nvim
 
 ```lua
 { "mimir/vim-mim" }
+```
+
+Load it eagerly - it is one `ftdetect` file plus two autocmds.  With `ft = "mim"` the parser
+registration only happens once a `*.mim` buffer is open, so `:TSInstall mim` from elsewhere would
+not find the grammar.
+
+### vim.pack (Neovim >= 0.12)
+
+```lua
+vim.pack.add({ "https://github.com/mimir/vim-mim" })
+```
+
+`:h vim.pack.update()` upgrades it later.
+
+### mini.deps
+
+```lua
+MiniDeps.add("mimir/vim-mim")
 ```
 
 ### vim-plug
@@ -22,6 +43,32 @@ MimIR:
 ```vim
 Plug 'mimir/vim-mim'
 ```
+
+### Vundle
+
+```vim
+Plugin 'mimir/vim-mim'
+```
+
+### packer.nvim (unmaintained)
+
+```lua
+use "mimir/vim-mim"
+```
+
+### No plugin manager
+
+Vim and Neovim load packages from the 'packpath' by themselves (`:h packages`), so a clone is all it
+takes:
+
+```sh
+# Neovim
+git clone https://github.com/mimir/vim-mim ~/.local/share/nvim/site/pack/mim/start/vim-mim
+# Vim
+git clone https://github.com/mimir/vim-mim ~/.vim/pack/mim/start/vim-mim
+```
+
+With pathogen, clone into `~/.vim/bundle` instead.
 
 ## Tree-sitter highlighting (Neovim)
 
