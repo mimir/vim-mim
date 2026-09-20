@@ -39,6 +39,34 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+-- A number literal is highlighted in pieces: `0x`/`0b`/`0o`, the `i32`/`_2`/`₂` size of an `Idx`
+-- literal and the `e10`/`p-3` exponent of a float each get a capture of their own, so that
+-- `0x23I32` does not read as one undifferentiated run of characters.  Each group sets *no*
+-- foreground: Neovim combines an extmark that leaves a colour unset with the one below it, so the
+-- marker keeps the colour of the surrounding literal and only gains the attribute - which is what
+-- keeps the literal looking like a single token.  `:hi @number.suffix guifg=... ` in your own
+-- config overrides this; `:colorscheme` wipes it, hence the autocmd.
+local emphasis = {
+  ["@number.prefix"] = { bold = true },
+  ["@number.suffix"] = { bold = true },
+  ["@number.float.prefix"] = { bold = true },
+  ["@number.float.exponent"] = { bold = true },
+}
+
+local function set_number_emphasis()
+  for group, attrs in pairs(emphasis) do
+    vim.api.nvim_set_hl(0, group, vim.tbl_extend("error", attrs, { default = true }))
+  end
+end
+
+set_number_emphasis()
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = "mim_treesitter",
+  desc = "re-apply the Mim number-literal emphasis, which `:hi clear` drops",
+  callback = set_number_emphasis,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "mim",
   group = "mim_treesitter",
