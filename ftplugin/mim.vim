@@ -37,8 +37,6 @@ iabbrev <buffer> \<     ‹
 iabbrev <buffer> \>     ›
 iabbrev <buffer> \ll    «
 iabbrev <buffer> \gg    »
-iabbrev <buffer> \{     ⦃
-iabbrev <buffer> \}     ⦄
 
 let b:undo_ftplugin = "setlocal iskeyword< comments< commentstring< spell<"
       \ . "| iunabbrev <buffer> \\to"
@@ -54,8 +52,6 @@ let b:undo_ftplugin = "setlocal iskeyword< comments< commentstring< spell<"
       \ . "| iunabbrev <buffer> \\>"
       \ . "| iunabbrev <buffer> \\ll"
       \ . "| iunabbrev <buffer> \\gg"
-      \ . "| iunabbrev <buffer> \\{"
-      \ . "| iunabbrev <buffer> \\}"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save

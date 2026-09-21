@@ -133,12 +133,11 @@ character:
 | `\top`        | `⊤`  | top                    |
 | `\box`        | `□`  | `Type (1:Univ)`        |
 | `\cup`        | `∪`  | union                  |
-| `\<`, `\>`    | `‹ ›` | pack                   |
-| `\ll`, `\gg`  | `« »` | array                  |
-| `\{`, `\}`    | `⦃ ⦄` | unique/singleton type  |
+| `\<`, `\>`    | `‹ ›` | pack, singleton intro  |
+| `\ll`, `\gg`  | `« »` | array, singleton type  |
 
 `→ ← λ ⊥ ⊤` have ASCII spellings of their own (`-> <- lm bot top`) that Mim accepts just as well;
-`∪ □ ‹ › « » ⦃ ⦄` do not, so for those the abbreviations - or `:h digraphs` - are the way in.
+`∪ □ ‹ › « »` do not, so for those the abbreviations - or `:h digraphs` - are the way in.
 
 `->` and `<-` consist entirely of non-keyword characters, which Vim only expands at the start of a
 line or after whitespace (`:h abbreviations`); `x-> y` stays as typed.  The `\...` spellings have no
