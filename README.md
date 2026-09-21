@@ -3,10 +3,10 @@
 Vim and Neovim support for [Mim](https://mimir.github.io/langref.html), the front-end language of
 MimIR:
 
-* filetype detection for `*.mim`;
-* an ftplugin with comment settings and abbreviations for the Unicode terminals;
-* a regex syntax file - the highlighting in plain Vim, and the fallback in Neovim;
-* on Neovim, registration of the [tree-sitter grammar](https://github.com/mimir/tree-sitter-mim)
+- filetype detection for `*.mim`;
+- an ftplugin with comment settings and abbreviations for the Unicode terminals;
+- a regex syntax file - the highlighting in plain Vim, and the fallback in Neovim;
+- on Neovim, registration of the [tree-sitter grammar](https://github.com/mimir/tree-sitter-mim)
   with [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter).
 
 ## Install
@@ -20,7 +20,7 @@ files are detected, highlighted, and get the abbreviations.
 { "mimir/vim-mim" }
 ```
 
-Load it eagerly - it is one `ftdetect` file plus two autocmds.  With `ft = "mim"` the parser
+Load it eagerly - it is one `ftdetect` file plus two autocmds. With `ft = "mim"` the parser
 registration only happens once a `*.mim` buffer is open, so `:TSInstall mim` from elsewhere would
 not find the grammar.
 
@@ -81,15 +81,15 @@ One command installs it:
 
 That downloads [mimir/tree-sitter-mim](https://github.com/mimir/tree-sitter-mim), compiles the
 parser, and installs its queries - after which `*.mim` buffers are highlighted from the parse tree,
-`///` doc comments are highlighted as Markdown, and folding works.  `:TSUpdate mim` picks up a newer
+`///` doc comments are highlighted as Markdown, and folding works. `:TSUpdate mim` picks up a newer
 grammar later on.
 
-Requirements: Neovim >= 0.11, `nvim-treesitter` on branch `main`, and a C compiler.  The tree-sitter
-CLI is *not* needed - the generated parser is committed to the grammar repository.
+Requirements: Neovim >= 0.11, `nvim-treesitter` on branch `main`, and a C compiler. The tree-sitter
+CLI is _not_ needed - the generated parser is committed to the grammar repository.
 
-Highlighting starts by itself; there is no `vim.treesitter.start()` to write.  While it runs, Neovim
+Highlighting starts by itself; there is no `vim.treesitter.start()` to write. While it runs, Neovim
 empties `'syntax'` for the buffer, so the two highlighters never fight: the syntax file below takes
-over whenever the parser is missing, and `:lua vim.treesitter.stop()` brings it back by hand.  Plain
+over whenever the parser is missing, and `:lua vim.treesitter.stop()` brings it back by hand. Plain
 Vim ignores all of this and uses the syntax file.
 
 If you work on the grammar itself, register a local clone instead - your own registration always
@@ -121,26 +121,26 @@ cursor, and `:checkhealth nvim-treesitter` whether the parser is installed.
 ## Typing the Unicode terminals
 
 Mim spells several terminals with characters that are awkward to type, so the ftplugin defines
-insert-mode abbreviations for them.  Type the left column followed by a space or any non-keyword
+insert-mode abbreviations for them. Type the left column followed by a space or any non-keyword
 character:
 
-| Type          | Get  | Used for               |
-|---------------|------|------------------------|
-| `\to`, `->`   | `→`  | function type          |
-| `\gets`, `<-` | `←`  | insert                 |
-| `\lm`         | `λ`  | lambda                 |
-| `\bot`        | `⊥`  | bottom                 |
-| `\top`        | `⊤`  | top                    |
-| `\box`        | `□`  | `Type (1:Univ)`        |
-| `\cup`        | `∪`  | union                  |
-| `\<`, `\>`    | `‹ ›` | pack, singleton intro  |
-| `\ll`, `\gg`  | `« »` | array, singleton type  |
+| Type          | Get   | Used for              |
+| ------------- | ----- | --------------------- |
+| `\to`, `->`   | `→`   | function type         |
+| `\gets`, `<-` | `←`   | insert                |
+| `\lm`         | `λ`   | lambda                |
+| `\bot`        | `⊥`   | bottom                |
+| `\top`        | `⊤`   | top                   |
+| `\box`        | `□`   | `Type (1:Univ)`       |
+| `\cup`        | `∪`   | union                 |
+| `\<`, `\>`    | `‹ ›` | pack, singleton intro |
+| `\ll`, `\gg`  | `« »` | array, singleton type |
 
 `→ ← λ ⊥ ⊤` have ASCII spellings of their own (`-> <- lm bot top`) that Mim accepts just as well;
 `∪ □ ‹ › « »` do not, so for those the abbreviations - or `:h digraphs` - are the way in.
 
 `->` and `<-` consist entirely of non-keyword characters, which Vim only expands at the start of a
-line or after whitespace (`:h abbreviations`); `x-> y` stays as typed.  The `\...` spellings have no
+line or after whitespace (`:h abbreviations`); `x-> y` stays as typed. The `\...` spellings have no
 such restriction.
 
 The ftplugin adds `\` to `'iskeyword'` for the buffer so that `\to` and friends are recognised as
@@ -148,9 +148,9 @@ one word, and undoes that (along with everything else it sets) via `b:undo_ftplu
 
 ## See also
 
-* [mimir/tree-sitter-mim](https://github.com/mimir/tree-sitter-mim) - the tree-sitter grammar, which
+- [mimir/tree-sitter-mim](https://github.com/mimir/tree-sitter-mim) - the tree-sitter grammar, which
   also documents the Helix and VS Code integrations.
-* [Mim language reference](https://mimir.github.io/langref.html) - the surface syntax this plugin
+- [Mim language reference](https://mimir.github.io/langref.html) - the surface syntax this plugin
   follows.
 
 ## License
