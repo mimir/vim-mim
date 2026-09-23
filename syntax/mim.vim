@@ -118,7 +118,13 @@ syn region  mimCommentDoc start="///" end="$" keepend
 " operators below, the latter are not tokens at all.
 syn match mimDelimiter "[()\[\]{}]"
 syn match mimDelimiter "[‹›«»]"
-syn match mimDelimiter "[,;.]"
+syn match mimDelimiter "[,;]"
+" The "." of a float literal such as ".5" belongs to that literal - and since
+" this item is defined after mimFloat it would win at that position otherwise
+" (":h :syn-priority").  A "." behind a keyword character is never the start of
+" a literal (cf. the anchor on the literals above), so "%core.nat" and the "."
+" of "1.5" are delimiter and literal as before.
+syn match mimDelimiter "\w\@1<=\.\|\.\d\@!"
 
 " The remaining primary terminals, cf. langref.md#terminals:
 "   → ← => = @ $ # | : ∪          ("⊥" "⊤" "*" "□" "λ" are handled further above)

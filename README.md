@@ -1,5 +1,7 @@
 # vim-mim
 
+[![tests](https://img.shields.io/github/actions/workflow/status/mimir/vim-mim/test.yml?branch=main&label=tests&logo=neovim&logoColor=white&style=flat-square)](https://github.com/mimir/vim-mim/actions/workflows/test.yml)
+
 Vim and Neovim support for [Mim](https://mimir.github.io/langref.html), the front-end language of
 MimIR:
 
@@ -152,6 +154,20 @@ one word, and undoes that (along with everything else it sets) via `b:undo_ftplu
   also documents the Helix and VS Code integrations.
 - [Mim language reference](https://mimir.github.io/langref.html) - the surface syntax this plugin
   follows.
+
+## Tests
+
+`test/run.sh` runs the test suite - in Vim, in Neovim, or in both if both are installed:
+
+```sh
+test/run.sh        # both
+test/run.sh nvim   # only Neovim
+```
+
+The tests live in `test/test_*.vim`, one file per part of the plugin, and are plain Vim script
+using Vim's own `assert_*()` functions, so the same files run in both editors; `test/run.vim` is
+the runner and holds the helpers the tests share. GitHub Actions runs all of it against the current
+and the nightly Vim and Neovim, plus the oldest supported Neovim.
 
 ## License
 
