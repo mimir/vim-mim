@@ -202,8 +202,10 @@ else
   " what was typed.
   function! Test_abbrev_vim_non_id_expands() abort
     for [l:lhs, l:rhs] in items({'\<': '‹', '\>': '›', '->': '→', '<-': '←'})
+      " <CR> opens a line below whether or not it expanded anything; the line
+      " the abbreviation is on is all that matters here.
       let l:results = map(["\<C-]>", "\<CR>", "\<Esc>"],
-            \ {_, trigger -> MimType(l:lhs . trigger)})
+            \ {_, trigger -> substitute(MimType(l:lhs . trigger), '\n$', '', '')})
 
       for l:result in l:results
         call assert_true(l:result =~# '^' . l:rhs || l:result ==# l:lhs,
