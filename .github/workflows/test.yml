@@ -41,7 +41,7 @@ jobs:
           EDITOR_BIN: ${{ steps.editor.outputs.executable }}
         run: |
           if [ '${{ matrix.editor }}' = neovim ]; then
-            NVIM="$EDITOR_BIN" test/run.sh nvim
+            NVIM_BIN="$EDITOR_BIN" test/run.sh nvim
           else
-            VIM="$EDITOR_BIN" test/run.sh vim
+            VIM_BIN="$EDITOR_BIN" test/run.sh vim
           fi
