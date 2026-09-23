@@ -1,0 +1,3 @@
+# Exclude Vim script from GitHub Linguist statistics so the repository is
+# detected as a Lua (Neovim) plugin, e.g. for dotfyle.io.
+*.vim linguist-detectable=false
