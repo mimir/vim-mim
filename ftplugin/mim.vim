@@ -24,34 +24,43 @@ setlocal nospell
 
 " Digraph-style input for tokens that only exist as Unicode primary
 " terminals in the surface syntax, cf. langref.md#terminals.
-iabbrev <buffer> \to    →
-iabbrev <buffer> \gets  ←
-iabbrev <buffer> \top   ⊤
-iabbrev <buffer> \bot   ⊥
-iabbrev <buffer> \box   □
-iabbrev <buffer> \cup   ∪
-iabbrev <buffer> ->     →
-iabbrev <buffer> <-     ←
-iabbrev <buffer> \lm    λ
-iabbrev <buffer> \<     ‹
-iabbrev <buffer> \>     ›
-iabbrev <buffer> \ll    «
-iabbrev <buffer> \gg    »
-
+"
+" Neovim expands these itself (see lua/mim/abbrev.lua) - ":iabbrev" cannot
+" express "\<" and "\>" properly - and says so by setting
+" g:loaded_mim_abbrev.  What follows is the plain-Vim path, and the fallback
+" for an older Neovim or one where "vim.g.mim_abbrev = false" turned the Lua
+" expansion off.
 let b:undo_ftplugin = "setlocal iskeyword< comments< commentstring< spell<"
-      \ . "| iunabbrev <buffer> \\to"
-      \ . "| iunabbrev <buffer> \\gets"
-      \ . "| iunabbrev <buffer> \\top"
-      \ . "| iunabbrev <buffer> \\bot"
-      \ . "| iunabbrev <buffer> \\box"
-      \ . "| iunabbrev <buffer> \\cup"
-      \ . "| iunabbrev <buffer> ->"
-      \ . "| iunabbrev <buffer> <-"
-      \ . "| iunabbrev <buffer> \\lm"
-      \ . "| iunabbrev <buffer> \\<"
-      \ . "| iunabbrev <buffer> \\>"
-      \ . "| iunabbrev <buffer> \\ll"
-      \ . "| iunabbrev <buffer> \\gg"
+
+if !exists("g:loaded_mim_abbrev")
+  iabbrev <buffer> \to    →
+  iabbrev <buffer> \gets  ←
+  iabbrev <buffer> \top   ⊤
+  iabbrev <buffer> \bot   ⊥
+  iabbrev <buffer> \box   □
+  iabbrev <buffer> \cup   ∪
+  iabbrev <buffer> ->     →
+  iabbrev <buffer> <-     ←
+  iabbrev <buffer> \lm    λ
+  iabbrev <buffer> \<     ‹
+  iabbrev <buffer> \>     ›
+  iabbrev <buffer> \ll    «
+  iabbrev <buffer> \gg    »
+
+  let b:undo_ftplugin .= "| iunabbrev <buffer> \\to"
+        \ . "| iunabbrev <buffer> \\gets"
+        \ . "| iunabbrev <buffer> \\top"
+        \ . "| iunabbrev <buffer> \\bot"
+        \ . "| iunabbrev <buffer> \\box"
+        \ . "| iunabbrev <buffer> \\cup"
+        \ . "| iunabbrev <buffer> ->"
+        \ . "| iunabbrev <buffer> <-"
+        \ . "| iunabbrev <buffer> \\lm"
+        \ . "| iunabbrev <buffer> \\<"
+        \ . "| iunabbrev <buffer> \\>"
+        \ . "| iunabbrev <buffer> \\ll"
+        \ . "| iunabbrev <buffer> \\gg"
+endif
 
 let &cpo = s:cpo_save
 unlet s:cpo_save

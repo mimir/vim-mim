@@ -62,11 +62,23 @@ function! MimSynLink(group) abort
   return matchstr(execute('highlight ' . a:group), 'links to \zs\w\+')
 endfunction
 
-" Type `keys` into a fresh Mim buffer in insert mode and return the result.
-" The keys are fed as if typed, so insert-mode abbreviations expand.
+" Wait for an abbreviation Neovim has not replaced yet: it does that from
+" vim.schedule(), i.e. once the editor is back in its event loop.
+function! s:Expanded() abort
+  if has('nvim')
+    call luaeval('vim.wait(200,'
+          \ . ' function() return not require("mim.abbrev").is_pending(0) end)')
+  endif
+endfunction
+
+" Type `keys` into a fresh Mim buffer in insert mode and return the buffer.
+" The keys are fed as if typed, so the abbreviations expand; insert mode ends
+" with the keys, the way feedkeys() ends it in a script - which is a trigger
+" of its own, and the only one Vim has for some of the abbreviations.
 function! MimType(keys) abort
   call MimBuffer([''])
   call feedkeys('i' . a:keys, 'xt')
+  call s:Expanded()
   return join(getline(1, '$'), "\n")
 endfunction
 

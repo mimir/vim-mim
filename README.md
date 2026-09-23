@@ -11,6 +11,30 @@ MimIR:
 - on Neovim, registration of the [tree-sitter grammar](https://github.com/mimir/tree-sitter-mim)
   with [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter).
 
+## Vim and Neovim
+
+Both editors are supported, and Neovim additionally gets what it can do better. That part is
+written in Lua - `plugin/mim.lua` and `lua/mim/` - which Vim never reads, so neither editor pays
+for the other:
+
+|                         | Vim                     | Neovim                                      |
+| ----------------------- | ----------------------- | ------------------------------------------- |
+| filetype detection      | yes                     | yes                                         |
+| comments, `'iskeyword'` | yes                     | yes                                         |
+| highlighting            | regex syntax file       | tree-sitter, syntax file until `:TSInstall` |
+| `///` doc comments      | Markdown, line by line  | Markdown from the parse tree                |
+| folding                 | no                      | from the parse tree                         |
+| number literals         | one colour each         | prefix, size and exponent emphasised        |
+| abbreviations           | `:iabbrev`, Vim's rules | an input layer of its own                   |
+
+The Neovim half needs 0.11 for the tree-sitter support and 0.10 for the abbreviations. An older
+Neovim - or `vim.g.mim_treesitter = false` and `vim.g.mim_abbrev = false` - falls back to the Vim
+column, which is the plugin's floor: the syntax file and the abbreviations of the ftplugin always
+work, in both editors, with nothing installed and nothing configured.
+
+[Tree-sitter highlighting](#tree-sitter-highlighting-neovim) and [Typing the Unicode
+terminals](#typing-the-unicode-terminals) below say what each of the two does.
+
 ## Install
 
 No setup call and nothing to configure: as soon as the plugin is on the 'runtimepath', `*.mim`
@@ -122,9 +146,8 @@ cursor, and `:checkhealth nvim-treesitter` whether the parser is installed.
 
 ## Typing the Unicode terminals
 
-Mim spells several terminals with characters that are awkward to type, so the ftplugin defines
-insert-mode abbreviations for them. Type the left column followed by a space or any non-keyword
-character:
+Mim spells several terminals with characters that are awkward to type, so the plugin expands
+abbreviations for them while you type:
 
 | Type          | Get   | Used for              |
 | ------------- | ----- | --------------------- |
@@ -141,9 +164,36 @@ character:
 `→ ← λ ⊥ ⊤` have ASCII spellings of their own (`-> <- lm bot top`) that Mim accepts just as well;
 `∪ □ ‹ › « »` do not, so for those the abbreviations - or `:h digraphs` - are the way in.
 
-`->` and `<-` consist entirely of non-keyword characters, which Vim only expands at the start of a
-line or after whitespace (`:h abbreviations`); `x-> y` stays as typed. The `\...` spellings have no
-such restriction.
+### Neovim
+
+Neovim expands them itself, in `lua/mim/abbrev.lua`, the way Lean's editor integrations do: `\`
+opens an abbreviation, which is underlined (`MimAbbrev`) until it is replaced. That happens as soon
+as what you have typed can only mean one thing - `\lm` is `λ` with nothing typed behind it - or as
+soon as you type a character that cannot continue it, which is then kept: `\<3` gives `‹3`, `\to `
+gives `→ `. Leaving insert mode or moving the cursor away expands what is there as well, and
+`\to\gets` expands both. Nothing is mapped, so `<Tab>` and `<CR>` keep doing whatever your
+completion plugin does with them.
+
+Two things `:iabbrev` cannot do:
+
+- `\<>` and `\llgg` type both halves of a pair around the cursor - `‹|›` and `«|»`;
+- `\\` inserts a literal backslash.
+
+`vim.g.mim_abbrev = { qed = "∎" }` adds abbreviations of your own. `vim.g.mim_abbrev = false` turns
+the expansion off and leaves Vim's abbreviations below in charge, which is also what an older
+Neovim (< 0.10) gets. `->` and `<-` are not abbreviations here; Mim accepts them as they are.
+
+### Vim
+
+The ftplugin defines the same abbreviations with `:iabbrev`, which comes with Vim's own rules for
+them (`:h abbreviations`):
+
+- `\to`, `\gets`, `\lm`, `\bot`, `\top`, `\box`, `\cup`, `\ll` and `\gg` are made of keyword
+  characters and expand as soon as a space - or any other non-keyword character - follows, but only
+  at the start of a word: `x\lm` stays as typed.
+- `\<`, `\>`, `->` and `<-` end in a non-keyword character. Vim recognises those only at the start
+  of a line or after whitespace, and *not* on the space that follows them: `<C-]>` expands one, as
+  do `<CR>` and `<Esc>` in recent Vim versions.
 
 The ftplugin adds `\` to `'iskeyword'` for the buffer so that `\to` and friends are recognised as
 one word, and undoes that (along with everything else it sets) via `b:undo_ftplugin`.

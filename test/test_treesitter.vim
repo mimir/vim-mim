@@ -54,15 +54,24 @@ function! Test_treesitter_without_nvim_treesitter() abort
   call assert_equal(v:null, luaeval('package.loaded["nvim-treesitter.parsers"]'))
 endfunction
 
-" Opening a Mim buffer must not fail while the parser is missing, and the
-" regex syntax file has to keep highlighting it.
-function! Test_treesitter_start_without_a_parser() abort
+" Opening a Mim buffer must not fail while the parser is missing - then the
+" regex syntax file keeps highlighting it - and must hand over to tree-sitter
+" once it is there.  Which of the two happens depends on the machine: CI has
+" no parser, a Mim developer's Neovim has.
+function! Test_treesitter_start() abort
   call MimBuffer(['let x = 42;'])
   " the highlighter is started from vim.schedule()
-  sleep 20m
-  call assert_equal('mim', b:current_syntax)
-  call assert_equal('mim', &syntax)
-  call assert_equal('mimNumber', synIDattr(synID(1, 9, 1), 'name'))
+  sleep 50m
+
+  if luaeval('vim.b.ts_highlight == true')
+    " the highlighter empties 'syntax' for the buffer, so that the two never
+    " fight over it
+    call assert_equal('', &syntax)
+  else
+    call assert_equal('mim', b:current_syntax)
+    call assert_equal('mim', &syntax)
+    call assert_equal('mimNumber', synIDattr(synID(1, 9, 1), 'name'))
+  endif
 endfunction
 
 " The pieces of a number literal are marked with an attribute only: no
