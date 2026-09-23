@@ -1,0 +1,35 @@
+name: vim
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: vim ${{ matrix.version }}
+    runs-on: ubuntu-latest
+    # a break in tomorrow's Vim is not a break in the plugin
+    continue-on-error: ${{ matrix.version == 'nightly' }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [stable, nightly]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: rhysd/action-setup-vim@v1
+        id: editor
+        with:
+          version: ${{ matrix.version }}
+
+      - name: Run the test suite
+        env:
+          VIM_BIN: ${{ steps.editor.outputs.executable }}
+        run: test/run.sh vim

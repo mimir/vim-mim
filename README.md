@@ -1,6 +1,7 @@
 # vim-mim
 
-[![tests](https://img.shields.io/github/actions/workflow/status/mimir/vim-mim/test.yml?branch=main&label=tests&logo=neovim&logoColor=white&style=flat-square)](https://github.com/mimir/vim-mim/actions/workflows/test.yml)
+[![vim](https://img.shields.io/github/actions/workflow/status/mimir/vim-mim/test-vim.yml?branch=main&label=vim&logo=vim&logoColor=white&style=flat-square)](https://github.com/mimir/vim-mim/actions/workflows/test-vim.yml)
+[![neovim](https://img.shields.io/github/actions/workflow/status/mimir/vim-mim/test-neovim.yml?branch=main&label=neovim&logo=neovim&logoColor=white&style=flat-square)](https://github.com/mimir/vim-mim/actions/workflows/test-neovim.yml)
 
 Vim and Neovim support for [Mim](https://mimir.github.io/langref.html), the front-end language of
 MimIR:

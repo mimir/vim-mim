@@ -1,0 +1,37 @@
+name: neovim
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: neovim ${{ matrix.version }}
+    runs-on: ubuntu-latest
+    # a break in tomorrow's Neovim is not a break in the plugin
+    continue-on-error: ${{ matrix.version == 'nightly' }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # v0.11.0 is the oldest Neovim the tree-sitter support claims to work with
+        version: [v0.11.0, stable, nightly]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: rhysd/action-setup-vim@v1
+        id: editor
+        with:
+          version: ${{ matrix.version }}
+          neovim: true
+
+      - name: Run the test suite
+        env:
+          NVIM_BIN: ${{ steps.editor.outputs.executable }}
+        run: test/run.sh nvim
