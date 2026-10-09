@@ -15,7 +15,7 @@ syn case match
 " Keywords {{{1
 " Declaration/expression keywords, cf. langref.md#terminals ("Keywords").
 syn keyword mimKeyword anx as axm cn con end extern fn fun import inj
-syn keyword mimKeyword lam let match mod mutual norm plugin priv pub
+syn keyword mimKeyword lam let match mod mutual nom norm plugin priv pub
 syn keyword mimKeyword rec ret rule use when where with
 " secondary spelling of the "λ" expression keyword
 syn keyword mimKeyword lm
