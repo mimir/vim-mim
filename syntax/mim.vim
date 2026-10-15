@@ -74,10 +74,9 @@ syn match mimFloat "\%(\w\)\@1<!0[xX]\x\+[pP][+-]\=\d\+"
 syn match mimFloat "\%(\w\)\@1<!0[xX]\x\+\.\x*[pP][+-]\=\d\+"
 syn match mimFloat "\%(\w\)\@1<!0[xX]\x*\.\x\+[pP][+-]\=\d\+"
 
-" X_n ::= dec+ sub+ | dec+ "_" dec+ | dec+ ["iI"] dec+
+" X_n ::= dec+ sub+ | dec+ "_" dec+ | (dec+ | "0" ["bB"] bin+ | ...) ["iI"] dec+
 " An index literal of type "Idx n"; the third form spells a bit width instead
-" of "n" itself, so "23I32" is "23:I32".  The hex/oct/bin spellings are not in
-" the grammar, but the printer/normalizer emits them, e.g. "0x1Fi16".
+" of "n" itself, so "23I32" is "23:I32" and "0xFFI8" is "255:I8".
 syn match mimIndex "\%(\w\)\@1<!\d\+[₀-₉]\+"
 syn match mimIndex "\%(\w\)\@1<!\d\+_\d\+"
 syn match mimIndex "\%(\w\)\@1<!\%(0[bB][01]\+\|0[oO][0-7]\+\|0[xX]\x\+\|\d\+\)[iI]\d\+"
@@ -86,9 +85,9 @@ syn match mimIndex "\%(\w\)\@1<!\%(0[bB][01]\+\|0[oO][0-7]\+\|0[xX]\x\+\|\d\+\)[
 syn match mimEscape "\\['\"0abfnrtv\\]" contained
 
 " C ::= "'" (ascii_char | esc) "'"
-" "ascii_char" is any ASCII character except "\", so "'" is a payload character
-" too; a non-ASCII payload character is an error and is left unmatched.
-syn match mimChar "'\%(\\['\"0abfnrtv\\]\|[\x20-\x5b\x5d-\x7e]\)'" contains=mimEscape
+" "ascii_char" is any ASCII character except "\" and "'", so "'''" is an error
+" and is left unmatched, just like a non-ASCII payload character.
+syn match mimChar "'\%(\\['\"0abfnrtv\\]\|[\x20-\x26\x28-\x5b\x5d-\x7e]\)'" contains=mimEscape
 
 " S ::= '"' (ascii_string_char | esc)* '"'
 syn region mimString start=+"+ skip=+\\.+ end=+"+ contains=mimEscape oneline
