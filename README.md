@@ -157,7 +157,7 @@ abbreviations for them while you type:
 | `\lm`         | `λ`   | lambda                |
 | `\bot`        | `⊥`   | bottom                |
 | `\top`        | `⊤`   | top                   |
-| `\box`        | `□`   | `Type (1:Univ)`       |
+| `\box`        | `□`   | `Type (1:Level)`      |
 | `\cup`        | `∪`   | union                 |
 | `\<`, `\>`    | `‹ ›` | pack, singleton intro |
 | `\ll`, `\gg`  | `« »` | array, singleton type |

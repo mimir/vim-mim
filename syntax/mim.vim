@@ -22,8 +22,8 @@ syn keyword mimKeyword lm
 syn match   mimKeyword "λ"
 
 " Builtin types / kinds, cf. langref.md#terminals ("Keywords").
-syn keyword mimType Bool Cn Fn I1 I8 I16 I32 I64 Idx Nat Rule Type Univ
-" "*" abbreviates "Type (0:Univ)", "□" abbreviates "Type (1:Univ)"; "★" is an
+syn keyword mimType Bool Cn Fn I1 I8 I16 I32 I64 Idx Level Nat Rule Type
+" "*" abbreviates "Type (0:Level)", "□" abbreviates "Type (1:Level)"; "★" is an
 " alternative spelling of "*"
 syn match   mimType "[*□]"
 syn match   mimType "★"
