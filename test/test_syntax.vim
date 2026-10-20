@@ -81,8 +81,10 @@ function! Test_syntax_char() abort
   call assert_equal(['mimChar'], MimSynOf('let c = ''a'';', '''a'''))
   call assert_equal(['mimChar', 'mimEscape', 'mimChar'],
         \ MimSynOf('let c = ''\n'';', '''\n'''))
-  " "'" itself is a payload character
-  call assert_equal(['mimChar'], MimSynOf("let c = ''';", "'''"))
+  call assert_equal(['mimChar', 'mimEscape', 'mimChar'],
+        \ MimSynOf("let c = '\\'';", "'\\''"))
+  " an unescaped "'" is an error
+  call assert_equal([''], MimSynOf("let c = ''';", "'''"))
 endfunction
 
 function! Test_syntax_string() abort
